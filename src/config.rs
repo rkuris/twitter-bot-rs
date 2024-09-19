@@ -1,23 +1,34 @@
+use core::error::Error;
+use serde::{Deserialize, Serialize};
+use std::fs::File;
 use std::path::Path;
-use std::fs::{File};
-use serde_json;
 
-#[derive(Serialize, Deserialize)]
+/// Configuration for twitter and currencies to follow
+#[derive(Serialize, Deserialize, Default)]
 pub struct Config {
-    pub consumer_key : String, 
-    pub consumer_secret : String,
-    pub access_key : String,
-    pub access_secret : String,
-    pub currencies_to_follow : Vec<String>,
-    pub interval_sec : u64,
+    /// Consumer key (aka API key) for Twitter
+    pub consumer_key: Option<String>,
+
+    /// Consumer secret (aka API secret) for Twitter
+    pub consumer_secret: Option<String>,
+
+    /// Access key for Twitter
+    pub access_key: Option<String>,
+
+    /// Access secret for Twitter
+    pub access_secret: Option<String>,
+
+    /// List of currencies to follow
+    pub currencies_to_follow: Vec<String>,
+
+    /// How often to poll for prices, in seconds
+    pub interval_sec: Option<u64>,
 }
 
 impl Config {
-    pub fn read(path_file: &Path) -> Option<Config> {
-        let mut file = match File::open(path_file) {
-            Ok(f) => f,
-            Err(_) => return None,
-        };
-        serde_json::from_reader(&mut file).ok()
+    /// Read the config from a file
+    pub fn read(path_file: &Path) -> Result<Self, Box<dyn Error>> {
+        let mut file = File::open(path_file)?;
+        Ok(serde_json::from_reader(&mut file)?)
     }
 }

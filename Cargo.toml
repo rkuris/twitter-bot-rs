@@ -1,15 +1,25 @@
 [package]
 name = "twitter-bot-rs"
 version = "0.1.0"
-authors = ["Julien Delange <julien@gunnm.org>"]
+authors = ["Julien Delange <julien@gunnm.org>", "Ron Kuris <swcafe@gmail.com>"]
+edition = "2021"
+keywords = ["twitter", "bot", "rust"]
+categories = ["web-programming"]
+description = "A Twitter bot written in Rust"
+license = "MIT"
+repository = "https://github.com/juli1/twitter-bot-rs.git"
 
 [dependencies]
-serde_derive = "1.0"
-serde_json = "1.0"
+serde_derive = "1.0.210"
+serde_json = "1.0.128"
 serde = "1.0"
-tokio-core = "0.1.12"
-hyper = "0.11.16"
-hyper-tls = "0.1.2"
-futures = "0.1"
-oauth-client = "0.3"
-twitter-api = "*"
+tokio = { version = "1.40.0", features = ["full"] }
+hyper = "1.4.1"
+hyper-tls = "0.6.0"
+hyper-util = {version = "0.1.8", features = ["http1", "http2"] }
+futures = "0.3.30"
+oauth-client = "0.8.0"
+twitter-api = "0.6.1"
+http-body-util = "0.1.2"
+home = "0.5.9"
+chrono = "0.4.38"
